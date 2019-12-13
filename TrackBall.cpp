@@ -1,22 +1,22 @@
 
 #include "TrackBall.h"
 
-TrackBall::TrackBall(uint8_t address, Wire* i2c_bus, interrupt_pin){
+TrackBall::TrackBall(uint8_t address, Wire* i2c_bus, interrupt_pin) {
 	// Set up I2C connection
 	_i2c_address = address;
 	_i2c_bus = i2c_bus;
 	_interrupt_pin = interrupt_pin;
-	
+
 	// Not doing this is probably fine
 	/*chip_id = struct.unpack("<H", bytearray(self.i2c_rdwr([REG_CHIP_ID_L], 2)))[0]
 	if (chip_id != CHIP_ID) {
 		raise RuntimeError("Invalid chip ID: 0x{:04X}, expected 0x{:04X}".format(chip_id, CHIP_ID));
 	}*/
-	
-	if (_interrupt_pin != NO_PIN){
+
+	if (_interrupt_pin != NO_PIN) {
 		pinMode(_interrupt_pin, INPUT);
 	}
-	
+
 	enable_interrupt();
 }
 
@@ -27,7 +27,7 @@ void TrackBall::change_address(uint8_t new_address) {
 }
 
 void TrackBall::_wait_for_flash() {
-	while (get_interrupt()) { }
+	while (get_interrupt()) {}
 	while (!get_interrupt()) {
 		delay(1);
 	}
@@ -37,7 +37,7 @@ void TrackBall::_wait_for_flash() {
 void TrackBall::enable_interrupt(bool interrupt) {
 	uint8_t value = 0;
 	i2c_rdwr_2(&REG_INT, 1, &value, 1);
-	
+
 	value &= ~MSK_INT_OUT_EN;
 	if (interrupt) {
 		value |= MSK_INT_OUT_EN;
@@ -55,12 +55,12 @@ uint8_t TrackBall::i2c_rdwr_2(uint8_t* data, uint8_t dataLength, uint8_t* readBu
 		_i2c_bus.write(data[i]);        // send all data
 	}
 	_i2c_bus.endTransmission();    // stop transmitting
-	
+
 	uint8_t bytesRead = 0;
 	while (bytesRead < readLength && _i2c_bus.available()) {
 		readBuf[bytesRead++] = _i2c_bus.read(_i2c_address);
 	}
-	
+
 	return bytesRead;
 }
 
@@ -104,12 +104,12 @@ void TrackBall::set_green(uint8_t value) {
 }
 
 // Set brightness of trackball blue LED.
-void TrackBall::set_blue(uint8_t value){
+void TrackBall::set_blue(uint8_t value) {
 	i2cWriteRegValue(REG_LED_BLU, value);
 }
 
 // Set brightness of trackball white LED.
-void TrackBall::set_white(uint8_t value){
+void TrackBall::set_white(uint8_t value) {
 	i2cWriteRegValue(REG_LED_WHT, value);
 }
 
@@ -118,7 +118,7 @@ void TrackBall::read() {
 	_i2c_bus.beginTransmission(_i2c_address);
 	_i2c_bus.write(REG_LEFT);
 	_i2c_bus.endTransmission();
-	
+
 	uint8_t timeout = 10;
 	do {
 		if (_i2c_bus.available() >= 5) {
@@ -127,16 +127,16 @@ void TrackBall::read() {
 			up = _i2c_bus.read();
 			down = _i2c_bus.read();
 			enter = _i2c_bus.read();
-			
+
 			enter_state = enter & MSK_SWITCH_STATE;	// top bit as bool
 			enter &= ~MSK_SWITCH_STATE;				// bottom 7 bits
-			
+
 			return true;	// success
 		}
-		
+
 		delay(1);
-	} while(--timeout > 0);
-	
+	} while (--timeout > 0);
+
 	return false;
 }
 
