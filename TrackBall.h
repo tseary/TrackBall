@@ -56,15 +56,15 @@ public:
 private:
 	// self fields
 	uint8_t _i2c_address;
-	Wire* _i2c_bus;
+	//TwoWire& _i2c_bus;
 	uint8_t _interrupt_pin;
 
 	// Readout
-	uint8_t left, right, up, down, enter;
-	bool enter_state;
+	uint8_t left, right, up, down, sw;
+	bool swState;
 
 public:
-	TrackBall(uint8_t address = I2C_ADDRESS, Wire* i2c_bus = Wire, interrupt_pin = 0xff);
+	TrackBall(uint8_t address = I2C_ADDRESS, uint8_t interruptPin = NO_PIN);
 
 	void change_address(uint8_t new_address);
 
@@ -74,30 +74,30 @@ public:
 
 	// I2C helpers
 	// Returns the nuymber of bytes read into readBuf.
-	uint8_t i2c_rdwr_2(uint8_t* data, uint8_t dataLength, uint8_t* readBuf, uint8_t readLength);
+	/*uint8_t i2c_rdwr_2(uint8_t* data, const uint8_t dataLen, uint8_t* readBuf, const uint8_t readLen);*/
 	// Writes a value into a register.
 	void i2cWriteRegValue(uint8_t reg, uint8_t value);
 
 	bool get_interrupt();
 
 	// Set all colour components
-	void set_rgbw(uint8_t r, uint8_t g, uint8_t b, uint8_t w);
+	void setRGBW(uint8_t r, uint8_t g, uint8_t b, uint8_t w);
 
 	// Set colour components
-	void set_red(uint8_t value);
-	void set_green(uint8_t value);
-	void set_blue(uint8_t value);
-	void set_white(uint8_t value);
+	void setRed(uint8_t value);
+	void setGreen(uint8_t value);
+	void setBlue(uint8_t value);
+	void setWhite(uint8_t value);
 
 	// Read and store the state of the trackball
 	// Returns true if successful
-	bool read(self);
+	bool read();
 
 	// Get the stored state of the trackball
 	uint8_t getLeft();
 	uint8_t getRight();
 	uint8_t getUp();
 	uint8_t getDown();
-	bool getEnter();
-	bool getEnterState();
+	uint8_t getSwitch();
+	bool getSwitchState();
 };

@@ -1,0 +1,42 @@
+#######################################
+# Syntax Coloring Map For TrackBall
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+TrackBall	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+change_address	KEYWORD2
+_wait_for_flash	KEYWORD2
+enable_interrupt	KEYWORD2
+get_interrupt	KEYWORD2
+setRGBW		KEYWORD2
+setRed		KEYWORD2
+setGreen	KEYWORD2
+setBlue		KEYWORD2
+setWhite	KEYWORD2
+getLeft		KEYWORD2
+getRight	KEYWORD2
+getUp		KEYWORD2
+getDown		KEYWORD2
+getSwitch	KEYWORD2
+getSwitchState	KEYWORD2
+
+#######################################
+# Instances (KEYWORD2)
+#######################################
+
+Wire	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+I2C_ADDRESS	LITERAL1
+I2C_ADDRESS_ALTERNATIVE	LITERAL1
