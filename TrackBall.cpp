@@ -2,6 +2,11 @@
 #include "TrackBall.h"
 
 TrackBall::TrackBall(uint8_t address, uint8_t interruptPin) {
+	Serial.print("create TrackBall\t");
+	Serial.print(address, HEX);
+	Serial.print('\t');
+	Serial.println(interruptPin);
+
 	// Set up I2C connection
 	_i2c_address = address;
 	_interrupt_pin = interruptPin;
@@ -34,6 +39,8 @@ void TrackBall::_wait_for_flash() {
 
 // Enable/disable GPIO interrupt pin.
 void TrackBall::enable_interrupt(bool interrupt) {
+	Serial.println("enable_interrupt");
+
 	uint8_t value = 0;
 	//i2c_rdwr_2(&REG_INT, 1, &value, 1);
 
@@ -61,6 +68,11 @@ void TrackBall::enable_interrupt(bool interrupt) {
 }*/
 
 void TrackBall::i2cWriteRegValue(uint8_t reg, uint8_t value) {
+	Serial.print("i2cWriteRegValue\t");
+	Serial.print(reg, HEX);
+	Serial.print('\t');
+	Serial.println(value);
+
 	Wire.beginTransmission(_i2c_address);
 	Wire.write(reg);
 	Wire.write(value);
@@ -91,21 +103,25 @@ void TrackBall::setRGBW(uint8_t r, uint8_t g, uint8_t b, uint8_t w) {
 
 // Set brightness of trackball red LED.
 void TrackBall::setRed(uint8_t value) {
+	Serial.println("setRed");
 	i2cWriteRegValue(REG_LED_RED, value);
 }
 
 // Set brightness of trackball green LED.
 void TrackBall::setGreen(uint8_t value) {
+	Serial.println("setGreen");
 	i2cWriteRegValue(REG_LED_GRN, value);
 }
 
 // Set brightness of trackball blue LED.
 void TrackBall::setBlue(uint8_t value) {
+	Serial.println("setBlue");
 	i2cWriteRegValue(REG_LED_BLU, value);
 }
 
 // Set brightness of trackball white LED.
 void TrackBall::setWhite(uint8_t value) {
+	Serial.println("setWhite");
 	i2cWriteRegValue(REG_LED_WHT, value);
 }
 
