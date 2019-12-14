@@ -21,9 +21,6 @@ void setup() {
   pinMode(13, OUTPUT);
   digitalWrite(13, ledState = true);
   
-  while(!Serial);
-  delay(2000);
-  
   Serial.begin(115200);
   
   trackball = new TrackBall(TrackBall::I2C_ADDRESS, TRACKBALL_INT_PIN);
@@ -32,22 +29,16 @@ void setup() {
 void loop() {
 //  Serial.println(millis());
   digitalWrite(13, ledState = !ledState); // Heartbeat
-
-  trackball->setRed(255);
-  delay(200);
-  trackball->setRed(0);
-
-  trackball->setGreen(255);
-  delay(200);
-  trackball->setGreen(0);
-
-  trackball->setBlue(255);
-  delay(200);
-  trackball->setBlue(0);
-
-  trackball->setWhite(255);
-  delay(200);
-  trackball->setWhite(0);
-
-  delay(200);
+  
+  Serial.print("success?\t");
+  Serial.println(trackball->read());
+  
+  uint8_t
+    r = trackball->getRight() ? 255 : 0,
+    g = trackball->getLeft() ? 255 : 0,
+    b = trackball->getUp() ? 255 : 0,
+    w = trackball->getDown() ? 255 : 0;
+  
+  trackball->setRGBW(r, g, b, w);
+  delay(1);
 }
