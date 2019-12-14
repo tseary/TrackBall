@@ -89,15 +89,21 @@ public:
 	void setBlue(uint8_t value);
 	void setWhite(uint8_t value);
 
-	// Read and store the state of the trackball
-	// Returns true if successful
+	// Read and store the state of the trackball.
+	// Returns true if successful.
 	bool read();
 
 	// Get the stored state of the trackball
+	// Returns the number of left "ticks" since the previous call to read().
 	uint8_t getLeft();
+	// Returns the number of right "ticks" since the previous call to read().
 	uint8_t getRight();
+	// Returns the number of up "ticks" since the previous call to read().
 	uint8_t getUp();
+	// Returns the number of down "ticks" since the previous call to read().
 	uint8_t getDown();
+	// Returns the number of switch toggles since the previous call to read().
 	uint8_t getSwitch();
+	// Returns true if the switch was pressed at the last call to read().
 	bool getSwitchState();
 };

@@ -32,6 +32,21 @@ void loop() {
   
   Serial.print("success?\t");
   Serial.println(trackball->read());
+
+  // Print directional data
+  Serial.print("L\t");
+  Serial.println(trackball->getLeft());
+  Serial.print("R\t");
+  Serial.println(trackball->getRight());
+  Serial.print("U\t");
+  Serial.println(trackball->getUp());
+  Serial.print("D\t");
+  Serial.println(trackball->getDown());
+  Serial.print("sw\t");
+  Serial.println(trackball->getSwitch());
+  Serial.print("sw_state \t");
+  Serial.println(trackball->getSwitchState());
+  Serial.println();
   
   uint8_t
     r = trackball->getRight() ? 255 : 0,
@@ -40,5 +55,5 @@ void loop() {
     w = trackball->getDown() ? 255 : 0;
   
   trackball->setRGBW(r, g, b, w);
-  delay(1);
+  delay(50);
 }
