@@ -51,10 +51,10 @@ void TrackBall::enableInterrupt(bool interrupt) {
 }*/
 
 // Write a new I2C address into flash.
-void TrackBall::changeAddress(uint8_t new_address) {
+/*void TrackBall::changeAddress(uint8_t new_address) {
 	i2cWriteRegValue(REG_I2C_ADDR, new_address);
 	waitForFlash();
-}
+}*/
 
 // Set all LED brightness as RGBW.
 void TrackBall::setRGBW(uint8_t r, uint8_t g, uint8_t b, uint8_t w) {
@@ -101,6 +101,10 @@ bool TrackBall::read() {
 		up = Wire.read();
 		down = Wire.read();
 		sw = Wire.read();
+
+		x += right - left;
+		y += up - down;
+
 		return true;	// success
 	}
 
@@ -129,6 +133,14 @@ uint8_t TrackBall::getSwitch() {
 
 bool TrackBall::getSwitchState() {
 	return sw & MSK_SWITCH_STATE;	// top bit as bool
+}
+
+long TrackBall::getX() {
+	return x;
+}
+
+long TrackBall::getY() {
+	return y;
 }
 
 bool TrackBall::isAnyInput() {

@@ -68,6 +68,8 @@ private:
 	uint8_t left, right, up, down, sw;
 	bool swState;
 
+	long x = 0, y = 0;
+
 public:
 	TrackBall(uint8_t address = I2C_ADDRESS, uint8_t interruptPin = NO_PIN);
 
@@ -103,6 +105,9 @@ public:
 	uint8_t getSwitch();
 	// Returns true if the switch was pressed at the last call to read().
 	bool getSwitchState();
+
+	long getX();
+	long getY();
 
 	// Returns true if any movement was made as of the last call to read().
 	bool isAnyInput();

@@ -26,6 +26,8 @@ getUp		KEYWORD2
 getDown		KEYWORD2
 getSwitch	KEYWORD2
 getSwitchState	KEYWORD2
+getX		KEYWORD2
+getY		KEYWORD2
 isAnyInput	KEYWORD2
 #waitForFlash	KEYWORD2
 

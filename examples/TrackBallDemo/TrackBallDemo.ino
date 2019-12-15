@@ -20,40 +20,48 @@ void setup() {
 
   pinMode(13, OUTPUT);
   digitalWrite(13, ledState = true);
-  
+
   Serial.begin(115200);
-  
+
   trackball = new TrackBall(TrackBall::I2C_ADDRESS, TRACKBALL_INT_PIN);
 }
 
 void loop() {
-//  Serial.println(millis());
   digitalWrite(13, ledState = !ledState); // Heartbeat
   
-  Serial.print("success?\t");
-  Serial.println(trackball->read());
+  if (!digitalRead(TRACKBALL_INT_PIN)) {
+    trackball->read();
+    
+    // Print directional data
+    Serial.print("L\t");
+    Serial.println(trackball->getLeft());
+    Serial.print("R\t");
+    Serial.println(trackball->getRight());
+    Serial.print("U\t");
+    Serial.println(trackball->getUp());
+    Serial.print("D\t");
+    Serial.println(trackball->getDown());
+    
+    Serial.print("x\t");
+    Serial.println(trackball->getX());
+    Serial.print("y\t");
+    Serial.println(trackball->getY());
+    
+    Serial.print("sw\t");
+    Serial.println(trackball->getSwitch());
+    Serial.print("sw_state \t");
+    Serial.println(trackball->getSwitchState());
+    Serial.println();
 
-  // Print directional data
-  Serial.print("L\t");
-  Serial.println(trackball->getLeft());
-  Serial.print("R\t");
-  Serial.println(trackball->getRight());
-  Serial.print("U\t");
-  Serial.println(trackball->getUp());
-  Serial.print("D\t");
-  Serial.println(trackball->getDown());
-  Serial.print("sw\t");
-  Serial.println(trackball->getSwitch());
-  Serial.print("sw_state \t");
-  Serial.println(trackball->getSwitchState());
-  Serial.println();
+    // Set colour according to movement
+    uint8_t
+      r = trackball->getRight() ? 255 : 0,
+      g = trackball->getLeft() ? 255 : 0,
+      b = trackball->getUp() ? 255 : 0,
+      w = trackball->getDown() ? 255 : 0;
+
+    trackball->setRGBW(r, g, b, w);
+  }
   
-  uint8_t
-    r = trackball->getRight() ? 255 : 0,
-    g = trackball->getLeft() ? 255 : 0,
-    b = trackball->getUp() ? 255 : 0,
-    w = trackball->getDown() ? 255 : 0;
-  
-  trackball->setRGBW(r, g, b, w);
   delay(50);
 }
