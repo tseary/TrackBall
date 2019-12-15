@@ -4,20 +4,29 @@
 #include <Wire.h>
 
 /*
-
+The Pimoroni trackball-python library, ported to Arduino.
+https://github.com/pimoroni/trackball-python/
+Created Dec. 2019 by Thomas Seary
+Some features that are available in the python library are not implemented here:
+- Checking the chip ID in the constructor
+- Getting the interrupt status over I2C
+- Changing the I2C address.
 */
 
 class TrackBall {
 public:
 	// I2C Addresses
 	static const uint8_t
-		I2C_ADDRESS = 0x0A,
-		I2C_ADDRESS_ALTERNATIVE = 0x0B;
+		I2C_ADDRESS = 0x0A;
+		//I2C_ADDRESS_ALTERNATIVE = 0x0B;
 
-protected:
-	static const uint16_t
+	static const uint8_t NO_PIN = 255;
+
+private:
+	// Chip identity
+	/*static const uint16_t
 		CHIP_ID = 0xBA11,
-		VERSION = 1;
+		VERSION = 1;*/
 
 	// I2C Registers
 	static const uint8_t
@@ -50,14 +59,10 @@ protected:
 		MSK_CTRL_FREAD = 0b00000100,
 		MSK_CTRL_FWRITE = 0b00001000;
 
-public:
-	static const uint8_t NO_PIN = 255;
-
-private:
 	// self fields
-	uint8_t _i2c_address;
+	uint8_t _address;
 	//TwoWire& _i2c_bus;
-	uint8_t _interrupt_pin;
+	uint8_t _interruptPin;
 
 	// Readout
 	uint8_t left, right, up, down, sw;
@@ -66,19 +71,11 @@ private:
 public:
 	TrackBall(uint8_t address = I2C_ADDRESS, uint8_t interruptPin = NO_PIN);
 
-	void change_address(uint8_t new_address);
+	void enableInterrupt(bool interrupt = true);
 
-	void _wait_for_flash();
-
-	void enable_interrupt(bool interrupt = true);
-
-	// I2C helpers
-	// Returns the nuymber of bytes read into readBuf.
-	/*uint8_t i2c_rdwr_2(uint8_t* data, const uint8_t dataLen, uint8_t* readBuf, const uint8_t readLen);*/
-	// Writes a value into a register.
-	void i2cWriteRegValue(uint8_t reg, uint8_t value);
-
-	bool get_interrupt();
+	// Not supported
+	//bool getInterrupt();
+	//void changeAddress(uint8_t new_address);
 
 	// Set all colour components
 	void setRGBW(uint8_t r, uint8_t g, uint8_t b, uint8_t w);
@@ -90,7 +87,7 @@ public:
 	void setWhite(uint8_t value);
 
 	// Read and store the state of the trackball.
-	// Returns true if successful.
+	// Returns a positive number if successful.
 	bool read();
 
 	// Get the stored state of the trackball
@@ -106,4 +103,16 @@ public:
 	uint8_t getSwitch();
 	// Returns true if the switch was pressed at the last call to read().
 	bool getSwitchState();
+
+	// Returns true if any movement was made as of the last call to read().
+	bool isAnyInput();
+
+private:
+	// I2C helpers
+	// Returns the nuymber of bytes read into readBuf.
+	/*uint8_t i2c_rdwr_2(uint8_t* data, const uint8_t dataLen, uint8_t* readBuf, const uint8_t readLen);*/
+	// Writes a value into a register.
+	void i2cWriteRegValue(uint8_t reg, uint8_t value);
+
+	//void waitForFlash();
 };

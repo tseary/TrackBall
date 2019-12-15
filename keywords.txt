@@ -12,10 +12,9 @@ TrackBall	KEYWORD1
 # Methods and Functions (KEYWORD2)
 #######################################
 
-change_address	KEYWORD2
-_wait_for_flash	KEYWORD2
-enable_interrupt	KEYWORD2
-get_interrupt	KEYWORD2
+enableInterrupt	KEYWORD2
+#getInterrupt	KEYWORD2
+#changeAddress	KEYWORD2
 setRGBW		KEYWORD2
 setRed		KEYWORD2
 setGreen	KEYWORD2
@@ -27,12 +26,12 @@ getUp		KEYWORD2
 getDown		KEYWORD2
 getSwitch	KEYWORD2
 getSwitchState	KEYWORD2
+isAnyInput	KEYWORD2
+#waitForFlash	KEYWORD2
 
 #######################################
 # Instances (KEYWORD2)
 #######################################
-
-Wire	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
