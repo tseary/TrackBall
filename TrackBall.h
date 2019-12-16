@@ -75,8 +75,9 @@ public:
 
 	void enableInterrupt(bool interrupt = true);
 
+	bool isInterrupt();
+
 	// Not supported
-	//bool getInterrupt();
 	//void changeAddress(uint8_t new_address);
 
 	// Set all colour components
@@ -106,6 +107,7 @@ public:
 	// Returns true if the switch was pressed at the last call to read().
 	bool getSwitchState();
 
+	void resetOrigin();
 	long getX();
 	long getY();
 

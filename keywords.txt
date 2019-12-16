@@ -13,7 +13,7 @@ TrackBall	KEYWORD1
 #######################################
 
 enableInterrupt	KEYWORD2
-#getInterrupt	KEYWORD2
+isInterrupt		KEYWORD2
 #changeAddress	KEYWORD2
 setRGBW		KEYWORD2
 setRed		KEYWORD2
@@ -26,6 +26,7 @@ getUp		KEYWORD2
 getDown		KEYWORD2
 getSwitch	KEYWORD2
 getSwitchState	KEYWORD2
+resetOrigin	KEYWORD2
 getX		KEYWORD2
 getY		KEYWORD2
 isAnyInput	KEYWORD2

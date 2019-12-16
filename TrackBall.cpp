@@ -40,15 +40,18 @@ void TrackBall::enableInterrupt(bool interrupt) {
 }
 
 // Get the trackball interrupt status.
-/*bool TrackBall::getInterrupt() {
+bool TrackBall::isInterrupt() {
 	if (_interruptPin != NO_PIN) {
 		return !digitalRead(_interruptPin);
-	} else {
+	} /*else {
 		uint8_t value = 0;
 		//i2c_rdwr_2(&REG_INT, 1, &value, 1);
 		return value & MSK_INT_TRIGGERED;
-	}
-}*/
+	}*/
+
+	// TODO read interrupt over I2C in the else block
+	return false;
+}
 
 // Write a new I2C address into flash.
 /*void TrackBall::changeAddress(uint8_t new_address) {
@@ -133,6 +136,10 @@ uint8_t TrackBall::getSwitch() {
 
 bool TrackBall::getSwitchState() {
 	return sw & MSK_SWITCH_STATE;	// top bit as bool
+}
+
+void TrackBall::resetOrigin() {
+	x = y = 0;
 }
 
 long TrackBall::getX() {
